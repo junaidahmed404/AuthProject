@@ -1,12 +1,34 @@
-# React + Vite
+# AuthProject - MERN Stack Authentication System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A **secure** and **scalable** authentication system built using the **MERN stack** (**MongoDB, Express.js, React.js, Node.js**). This project provides user authentication, role-based access control, and email verification.
 
-Currently, two official plugins are available:
+## 🚀 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 🔑 **User Authentication** – JWT-based authentication for secure login & registration.
+- 🛡 **Role-Based Access Control (RBAC)** – Manage user roles and permissions.
+- 📩 **Email Verification** – Sends verification emails using Mailtrap.
+- 🔄 **Token Refresh System** – Ensures a smooth authentication experience.
+- 🔐 **Secure Password Hashing** – Uses bcrypt for password encryption.
+- 📡 **RESTful API** – Well-structured backend with Express.js.
+- ⚡ **Modern Frontend** – Built with React.js & Vite.
 
-## Expanding the ESLint configuration
+## 🛠 Tech Stack
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### **Frontend**
+- React.js (Vite)
+- TailwindCSS
+- React Router
+
+### **Backend**
+- Node.js & Express.js
+- MongoDB (Mongoose)
+- JSON Web Tokens (JWT)
+- bcrypt for password encryption
+- Mailtrap for email verification
+
+## 🔧 Installation & Setup
+
+### **1️⃣ Clone the repository**
+```sh
+git clone https://github.com/junaidahmed404/AuthProject.git
+cd AuthProject

@@ -32,9 +32,8 @@ app.get('/', (req, res) => {
 
 })
 
-app.use(express.json()) //This Will Allow Us To Parse Incoming Requests With JSON Payloads (requests:req.body)
-
-app.use(cookieParser()); //This Will Allow Us To Parse Cookies
+app.use(express.json())
+app.use(cookieParser());
 
 app.use('/api/auth', authRoutes)
 
