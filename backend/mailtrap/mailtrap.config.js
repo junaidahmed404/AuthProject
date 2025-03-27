@@ -30,3 +30,4 @@ export const sender = {
 
 };
 
+export const recipient = "bhattijunaidahmed404@gmail.com";

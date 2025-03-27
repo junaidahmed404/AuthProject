@@ -1,5 +1,5 @@
 
-import { sender, transporter, recipient } from "./mailtrap.config.js"
+import { sender, transporter} from "./mailtrap.config.js"
 
 import { PASSWORD_RESET_REQUEST_TEMPLATE, PASSWORD_RESET_SUCCESS_TEMPLATE, VERIFICATION_EMAIL_TEMPLATE, WELCOME_EMAIL_TEMPLATE } from "./emailTemplates.js"
 
@@ -74,7 +74,7 @@ export const sendWelcomeEmail = async (name, email) => {
 // _________________________________________________________________________________
 
 
-export const sendPasswordResetEmail = async (recipient, resetUrl) => {
+export const sendPasswordResetEmail = async (email, resetUrl) => {
     try {
         // Ensure resetUrl is correctly formatted
         console.log("Generated Reset URL:", resetUrl);
@@ -83,7 +83,7 @@ export const sendPasswordResetEmail = async (recipient, resetUrl) => {
 
         const response = await transporter.sendMail({
             from: sender,  // Ensure 'sender' is correctly defined
-            to: recipient,  // Pass recipient dynamically
+            to: email,  // Pass recipient dynamically
             subject: "Password Reset",
             html: htmlContent,
         });
