@@ -29,7 +29,7 @@ export const signup = async (req, res) => {
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        const varificationToken = Math.floor(1000000 + Math.random() * 9000000)
+        const varificationToken = Math.floor(100000 + Math.random() * 900000)
 
         const user = new User({
 

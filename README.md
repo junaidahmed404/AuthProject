@@ -1,34 +1,8 @@
-# AuthProject - MERN Stack Authentication System
+# React + Vite
 
-A **secure** and **scalable** authentication system built using the **MERN stack** (**MongoDB, Express.js, React.js, Node.js**). This project provides user authentication, role-based access control, and email verification.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## 🚀 Features
+Currently, two official plugins are available:
 
-- 🔑 **User Authentication** – JWT-based authentication for secure login & registration.
-- 🛡 **Role-Based Access Control (RBAC)** – Manage user roles and permissions.
-- 📩 **Email Verification** – Sends verification emails using Mailtrap.
-- 🔄 **Token Refresh System** – Ensures a smooth authentication experience.
-- 🔐 **Secure Password Hashing** – Uses bcrypt for password encryption.
-- 📡 **RESTful API** – Well-structured backend with Express.js.
-- ⚡ **Modern Frontend** – Built with React.js & Vite.
-
-## 🛠 Tech Stack
-
-### **Frontend**
-- React.js (Vite)
-- TailwindCSS
-- React Router
-
-### **Backend**
-- Node.js & Express.js
-- MongoDB (Mongoose)
-- JSON Web Tokens (JWT)
-- bcrypt for password encryption
-- Mailtrap for email verification
-
-## 🔧 Installation & Setup
-
-### **1️⃣ Clone the repository**
-```sh
-git clone https://github.com/junaidahmed404/AuthProject.git
-cd AuthProject
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
