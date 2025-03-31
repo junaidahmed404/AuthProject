@@ -16,14 +16,18 @@ const SignUpPage = () => {
 
 	const handleSignUp = async (e) => {
 		e.preventDefault();
-
+	
 		try {
-			await signup(email, password, name);
-			navigate("/verify-email");
+			const success = await signup(email, password, name);
+			if (success) {
+				navigate("/verify-email");
+			}
 		} catch (error) {
-			console.log(error);
+			console.error("Signup failed:", error);
 		}
 	};
+
+	
 	return (
 		<motion.div
 			initial={{ opacity: 0, y: 20 }}

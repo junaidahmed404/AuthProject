@@ -19,26 +19,28 @@ const ProtectedRoute = ({ children }) => {
 	const { isAuthenticated, user } = useAuthStore();
 
 	if (!isAuthenticated) {
-		return <Navigate to='/login' replace />;
+		return <Navigate to="/login" replace />;
 	}
 
-	if (!user.isVerified) {
-		return <Navigate to='/verify-email' replace />;
+	if (user && !user.isVerified) {
+		return <Navigate to="/verify-email" replace />;
 	}
 
 	return children;
 };
+
 
 // redirect authenticated users to the home page
 const RedirectAuthenticatedUser = ({ children }) => {
 	const { isAuthenticated, user } = useAuthStore();
 
-	if (isAuthenticated && user.isVerified) {
-		return <Navigate to='/' replace />;
+	if (isAuthenticated && user?.isVerified) {
+		return <Navigate to="/" replace />;
 	}
 
 	return children;
 };
+
 
 function App() {
 	const { isCheckingAuth, checkAuth } = useAuthStore();

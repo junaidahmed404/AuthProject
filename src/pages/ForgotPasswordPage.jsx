@@ -11,11 +11,18 @@ const ForgotPasswordPage = () => {
 
 	const { isLoading, forgotPassword } = useAuthStore();
 
+	
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		await forgotPassword(email);
-		setIsSubmitted(true);
+		const success = await forgotPassword(email);
+		
+		if (success) {
+			setIsSubmitted(true);
+		} else {
+			alert("Failed to send reset link. Please try again.");
+		}
 	};
+	
 
 	return (
 		<motion.div

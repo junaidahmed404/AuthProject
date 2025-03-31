@@ -5,75 +5,53 @@ import { generateTokenAndSetCookie } from "../utils/generateTokenAndSetCookie.js
 import bcrypt from "bcryptjs";
 import crypto from 'crypto'; // Import the crypto module
 
+
 export const signup = async (req, res) => {
-
-    // res.send('Signup route')
-
     const { email, password, name } = req.body;
 
     try {
-
         if (!email || !password || !name) {
-
             throw new Error("Please fill in all fields");
-
         }
 
-        const userAlreadyExist = await User.findOne({ email })
-
+        const userAlreadyExist = await User.findOne({ email });
         if (userAlreadyExist) {
-
-            return res.status(400).json({ success: false, message: "User ALready Exist" })
-
+            return res.status(400).json({ success: false, message: "User Already Exists" });
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
-
-        const varificationToken = Math.floor(100000 + Math.random() * 900000)
+        const varificationToken = Math.floor(100000 + Math.random() * 900000);
 
         const user = new User({
-
             email,
-
             password: hashedPassword,
-
             name,
-
             varificationToken,
-
             varificationTokenExpiresAt: Date.now() + 24 * 60 * 60 * 1000 // 24 Hours
-
         });
 
         await user.save();
 
-        // JWT 
-
-        generateTokenAndSetCookie(res, user._id)
-
-        await sendVarificationEmail(user.email, varificationToken)
+        // Generate JWT and set cookie
+        generateTokenAndSetCookie(res, user._id);
+        await sendVarificationEmail(user.email, varificationToken);
 
         return res.status(201).json({
-
-            success: true, message: "User created successfully",
-
+            success: true,
+            message: "User created successfully",
             user: {
-
-                ...user._doc,
-
-                password: undefined,
-
-            }
-
-        })
+                id: user._id,
+                name: user.name,
+                email: user.email,
+                isVerified: user.isVarified || false, // Fix typo
+            },
+        });
+        
 
     } catch (error) {
-
-        return res.status(400).json({ success: false, message: error.message })
-
+        return res.status(400).json({ success: false, message: error.message });
     }
-
-}
+};
 
 
 
@@ -134,12 +112,10 @@ export const varifyEmail = async (req, res) => {
 
 
 export const login = async (req, res) => {
-
-    // res.send('Login route')
-
     try {
         const { email, password } = req.body;
         const user = await User.findOne({ email });
+
         if (!user) {
             return res.status(400).json({ success: false, message: "Invalid email or password" });
         }
@@ -148,18 +124,34 @@ export const login = async (req, res) => {
         if (!isPasswordValid) {
             return res.status(400).json({ success: false, message: "Invalid email or password" });
         }
+
         // Generate JWT token
-        generateTokenAndSetCookie(res, user._id)
+        generateTokenAndSetCookie(res, user._id);
 
-        user.lastLogin = new Date()
-        user.save()
-        return res.status(200).json({ success: true, message: "Logged in successfully" })
+        // Update last login time
+        user.lastLogin = new Date();
+        await user.save();
+
+        // ✅ FIX: Return user data in response
+        return res.status(200).json({
+            success: true,
+            message: "Logged in successfully",
+            user: {
+                id: user._id,
+                name: user.name,
+                email: user.email,
+                isVerified: user.isVarified,
+                createdAt: user.createdAt ? user.createdAt.toISOString() : null, // Ensure it's a string
+                lastLogin: user.lastLogin ? user.lastLogin.toISOString() : null,
+            },
+        });
+        
     } catch (error) {
-        console.log("Error Logging in", error)
-        return res.status(500).json({ success: false, message: error.message })
+        console.log("Error Logging in", error);
+        return res.status(500).json({ success: false, message: error.message });
     }
+};
 
-}
 
 
 // _________________________________________________________________________________
@@ -207,7 +199,7 @@ export const forgotPassword = async (req, res) => {
         await user.save();
 
         // Send email with reset token to the user's email
-        await sendPasswordResetEmail(user.email, `https://localhost:5173/reset-password?/${resetToken}`);
+        await sendPasswordResetEmail(user.email, `http://localhost:5173/reset-password/${resetToken}`);
 
         res.status(200).json({ success: true, message: "Password reset email sent to your email" });
 
@@ -223,34 +215,42 @@ export const forgotPassword = async (req, res) => {
 
 
 export const resetPassword = async (req, res) => {
-
-
     try {
-        const { token } = req.params;
-        const { password } = req.body;
-        // Check if the reset token is valid and not expired
+        const { token } = req.params; // Extract token from URL
+        const { password } = req.body; // Extract new password
+
+        if (!token || !password) {
+            return res.status(400).json({ success: false, message: "Invalid request" });
+        }
+
         const user = await User.findOne({
-            resetPasswordToken: token, resetPasswordExpiresAt:
-                { $gt: Date.now() }
+            resetPasswordToken: token,
+            resetPasswordExpiresAt: { $gt: Date.now() }, // Ensure token is not expired
         });
+
         if (!user) {
             return res.status(400).json({ success: false, message: "Invalid or expired reset token" });
         }
-        // Hash the new password and update the user document
+
+        // Hash the new password
         const hashedPassword = await bcrypt.hash(password, 10);
         user.password = hashedPassword;
         user.resetPasswordToken = undefined;
         user.resetPasswordExpiresAt = undefined;
+
         await user.save();
-        await sendResetSuccessEmail(user.email)
-        res.status(200).json({ success: true, message: "Password reset successfully" });
+
+        // Send confirmation email
+        await sendResetSuccessEmail(user.email);
+
+        return res.status(200).json({ success: true, message: "Password reset successful!" });
     } catch (error) {
-        console.log("Error in reset password", error);
-        return res.status(500).json({ success: false, message: error.message });
-
+        console.error("Error resetting password:", error);
+        return res.status(500).json({ success: false, message: "Server error" });
     }
+};
 
-}
+  
 
 
 
