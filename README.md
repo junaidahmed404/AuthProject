@@ -19,7 +19,7 @@ A **secure, standalone authentication service** built using **MERN Stack** with 
 
 ## 🛠 Tech Stack
 
-- **Frontend:** React, Zustand, Tailwind CSS  
+- **Frontend:** React, vite, Tailwind CSS  
 - **Backend:** Node.js, Express.js  
 - **Database:** MongoDB with Mongoose  
 - **Authentication:** JWT, OAuth2, Bcrypt  
@@ -29,8 +29,7 @@ A **secure, standalone authentication service** built using **MERN Stack** with 
 
 ## 📂 Project Structure
 
-/auth-service
-├── client/          # Frontend (React + Zustand)
+/auth-service        # Frontend (React + vite)
 ├── server/          # Backend (Node.js + Express)
 │   ├── config/      # Configuration files (env, DB, JWT, OAuth)
 │   ├── middleware/  # Authentication & security middlewares
@@ -57,11 +56,10 @@ cd auth-service
 2️⃣ Install Dependencies
 
 # Install server dependencies
-cd server
+cd backend
 npm install
 
 # Install client dependencies
-cd ../client
 npm install
 
 3️⃣ Set Up Environment Variables
@@ -83,9 +81,9 @@ EMAIL_PASS=your_email_service_password
 Start the Backend Server
 
 cd server
-npm run dev
+cd backend
+npm start
 
 
 Start the Frontend
-cd client
-npm start
+npm run dev
