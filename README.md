@@ -29,8 +29,18 @@ A **secure, standalone authentication service** built using **MERN Stack** with 
 
 ## 📂 Project Structure
 
-/auth-service │── /client # Frontend (React + Zustand) │── /server # Backend (Node.js + Express) │── /config # Configuration files (env, DB, JWT, OAuth) │── /middleware # Authentication & security middlewares │── /routes # API routes (auth, users) │── /controllers # Business logic for authentication │── /models # Mongoose models (User, Tokens) │── /utils # Utility functions (JWT, email, hashing) │── .env # Environment variables │── package.json # Dependencies & scripts │── README.md #
-
+/auth-service
+├── client/          # Frontend (React + Zustand)
+├── server/          # Backend (Node.js + Express)
+│   ├── config/      # Configuration files (env, DB, JWT, OAuth)
+│   ├── middleware/  # Authentication & security middlewares
+│   ├── routes/      # API routes (auth, users)
+│   ├── controllers/ # Business logic for authentication
+│   ├── models/      # Mongoose models (User, Tokens)
+│   ├── utils/       # Utility functions (JWT, email, hashing)
+├── .env             # Environment variables
+├── package.json     # Dependencies & scripts
+├── README.md        # Project documentation
 
 Project documentation
 
